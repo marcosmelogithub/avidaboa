@@ -1,0 +1,107 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>A Vida Boa</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            background-color: #ffffff;
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+        }
+
+        header {
+            width: 100%;
+            display: grid;
+            grid-template-columns: 1fr auto 1fr;
+            align-items: center;
+            padding: 20px;
+            gap: 20px;
+        }
+
+        .logo-esquerda {
+            justify-self: start;
+            width: 210px;
+            max-width: 100%;
+            height: auto;
+            display: block;
+        }
+
+        /* 
+           Proporção baseada no arquivo original (543px de largura):
+           Como o símbolo AVB ocupava ~615px ou 543px no conjunto original[cite: 1, 2],
+           o texto tem a mesma largura base do conjunto (aprox. 210px para manter a escala visual).
+        */
+        .texto-centro {
+            justify-self: center;
+            width: 450px;
+            max-width: 100%;
+            height: auto;
+            display: block;
+        }
+
+        /* Ajustes para telas menores (Tablets e Celulares) */
+        @media (max-width: 768px) {
+            header {
+                grid-template-columns: auto 1fr;
+                padding: 15px;
+                gap: 15px;
+            }
+
+            .logo-esquerda {
+                width: 120px;
+            }
+
+            .texto-centro {
+                width: 120px;
+                justify-self: center;
+            }
+        }
+
+        @media (max-width: 480px) {
+            header {
+                display: flex;
+                flex-direction: column;
+                justify-content: center;
+                align-items: center;
+                gap: 12px;
+            }
+
+            .logo-esquerda {
+                width: 140px;
+            }
+
+            .texto-centro {
+                width: 140px;
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <header>
+        <img id="img-logo" alt="Logo AVB" class="logo-esquerda">
+        <img id="img-texto" alt="A Vida Boa" class="texto-centro">
+        <div></div> <!-- Coluna auxiliar para manter o texto centralizado na tela -->
+    </header>
+
+    <script>
+        // 1 e 2. Criação das variáveis com os links das imagens
+        const logoavbsomentetexto = "https://raw.githubusercontent.com/marcosmelogithub/avidaboa/refs/heads/main/IMAGENS/logoavbsomentetexto.svg";
+        const logoavbsomentelogo = "https://raw.githubusercontent.com/marcosmelogithub/avidaboa/refs/heads/main/IMAGENS/logoavb.svg";
+
+        // Atribuição das URLs às tags img
+        document.getElementById("img-logo").src = logoavbsomentelogo;
+        document.getElementById("img-texto").src = logoavbsomentetexto;
+    </script>
+
+</body>
+</html>
