@@ -1,16 +1,16 @@
 <!--
     22/11/2026 - 22:22
-    1) define a estrutura e o estilo de uma página web chamada "A Vida Boa". 
-    2) inclui um cabeçalho com duas imagens: uma logo à esquerda e um texto centralizado. 
-    3) O layout é responsivo, ajustando-se para diferentes tamanhos de tela, incluindo tablets e celulares
-    4) o header possui um fundo leve e harmônico com o tom #184C54 das imagens, além de uma borda inferior 
-      e sombra para dar profundidade.
-    5) A largura do Header está ajustado à largura do texto do artigo, mantendo a harmonia visual
-      e evitando que o header fique muito largo em telas grandes
-    6) O conteúdo do arquivo AVidaBoaSegundoPlatao.md será carregado dinamicamente no container principal
-    7) O arquivo AVidaBoaSegundoPlatao.md é acessado por link absoluto no GitHub, 
-       garantindo que a página funcione mesmo em servidores locais ou hospedagens web
-    8) A página utiliza a biblioteca Marked.js para converter o arquivo .md em HTML
+    1) Define a estrutura e o estilo de uma página web chamada "A Vida Boa". 
+    2) Inclui um cabeçalho com duas imagens: uma logo à esquerda e um texto centralizado. 
+    3) O layout é responsivo, ajustando-se para diferentes tamanhos de tela, incluindo tablets e celulares.
+    4) O header possui um fundo leve e harmônico com o tom #184C54 das imagens, além de uma borda inferior 
+       e sombra para dar profundidade.
+    5) A largura do Header está ajustada à largura do texto do artigo, mantendo a harmonia visual
+       e evitando que o header fique muito largo em telas grandes.
+    6) Carrega dinamicamente múltiplos arquivos .md (Platão e Budismo) em sequência, aplicando
+       independentemente os estilos de introdução, tabelas responsivas e conclusão a cada um.
+    7) Os arquivos .md são acessados por links absolutos no GitHub.
+    8) A página utiliza a biblioteca Marked.js para converter os arquivos .md em HTML.
  -->
 
 <!DOCTYPE html>
@@ -18,7 +18,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>A Vida Boa segundo Platão</title>
+  <title>A Vida Boa</title>
   
   <!-- Importação da fonte Jost (Google Fonts) como fallback elegante para Optima em dispositivos Windows/Android -->
   <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -87,8 +87,8 @@
        ========================================================================== */
     header {
       width: 100%;
-      max-width: var(--container-max-width); /* Mesma largura máxima do .article-container */
-      margin: 0 auto 1.75rem auto;           /* Centralizado e alinhado com o conteúdo */
+      max-width: var(--container-max-width);
+      margin: 0 auto 1.75rem auto;
       display: grid;
       grid-template-columns: auto 1fr;
       align-items: center;
@@ -104,7 +104,7 @@
 
     .logo-esquerda {
       justify-self: start;
-      width: 150px; /* Proporcional aos 760px de largura do artigo */
+      width: 150px;
       max-width: 100%;
       height: auto;
       display: block;
@@ -125,6 +125,31 @@
       max-width: var(--container-max-width);
       margin: 0 auto;
       padding: 1rem 0 3rem 0;
+    }
+
+    /* Separador visual entre artigos distintos */
+    .article-divider {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      margin: 4.5rem 0;
+      gap: 1.25rem;
+    }
+
+    .article-divider::before,
+    .article-divider::after {
+      content: "";
+      flex: 1;
+      height: 1px;
+      background: linear-gradient(90deg, transparent, var(--border-color), transparent);
+    }
+
+    .article-divider span {
+      color: var(--color-soft);
+      font-size: 1.15rem;
+      letter-spacing: 0.35em;
+      padding-left: 0.35em; /* Compensa o letter-spacing final para centralização exata */
+      opacity: 0.75;
     }
 
     /* ==========================================================================
@@ -292,7 +317,7 @@
       }
 
       header {
-        grid-template-columns: 32% 1fr; /* Mantém as duas imagens lado a lado no mobile */
+        grid-template-columns: 32% 1fr;
         padding: 0.9rem 1rem;
         gap: 0.75rem;
         margin-bottom: 1.25rem;
@@ -311,6 +336,10 @@
       :root {
         --spacing-section: 2.25rem;
         --line-height-body: 1.68;
+      }
+
+      .article-divider {
+        margin: 3.25rem 0;
       }
 
       th, td {
@@ -334,91 +363,120 @@
     <img id="img-texto" alt="A Vida Boa" class="texto-centro">
   </header>
 
-  <!-- O conteúdo do arquivo AVidaBoaSegundoPlatao.md será injetado aqui -->
+  <!-- O conteúdo dos arquivos .md será injetado sequencialmente aqui -->
   <main class="article-container" id="content">
     <p class="status-msg">Carregando conteúdo...</p>
   </main>
 
   <script>
     // Identificação das imagens do cabeçalho
-    // --------------------------------------
-    // 1 e 2. Criação das variáveis com os links das imagens
     const logoavbsomentetexto = "https://raw.githubusercontent.com/marcosmelogithub/avidaboa/refs/heads/main/IMAGENS/logoavbsomentetexto.svg";
     const logoavbsomentelogo = "https://raw.githubusercontent.com/marcosmelogithub/avidaboa/refs/heads/main/IMAGENS/logoavb.svg";
 
-    // Atribuição das URLs às tags img
     document.getElementById("img-logo").src = logoavbsomentelogo;
     document.getElementById("img-texto").src = logoavbsomentetexto;
 
-    async function carregarMarkdown() {
+    // Lista ordenada dos arquivos Markdown a serem exibidos
+    const artigos = [
+      {
+        url: "https://raw.githubusercontent.com/marcosmelogithub/avidaboa/refs/heads/main/ARQSMD/AVidaBoa_001_SegundoPlatao.md",
+        tituloFallback: "O Pensamento de Platão sobre a Vida Boa"
+      },
+      {
+        url: "https://raw.githubusercontent.com/marcosmelogithub/avidaboa/refs/heads/main/ARQSMD/AVidaBoa_002_SegundoBudismo.md",
+        tituloFallback: "O Pensamento do Budismo sobre a Vida Boa"
+      }
+    ];
+
+    // Processa e aplica toda a estilização original em um bloco <article> isolado
+    function renderizarArtigo(markdownText, tituloFallback) {
+      const article = document.createElement('article');
+      article.innerHTML = marked.parse(markdownText);
+
+      // 1. Garante que exista um título H1 no topo caso o arquivo .md comece direto no texto
+      if (!article.querySelector('h1')) {
+        const h1 = document.createElement('h1');
+        h1.textContent = tituloFallback;
+        article.prepend(h1);
+      }
+
+      // 2. Estiliza os parágrafos introdutórios (antes da primeira linha divisória <hr> ou subtítulo)
+      const children = Array.from(article.children);
+      for (const el of children) {
+        if (el.tagName === 'HR' || el.tagName === 'H2' || el.tagName === 'H3') break;
+        if (el.tagName === 'P') {
+          el.classList.add('intro-p');
+        }
+      }
+
+      // 3. Envolve todas as tabelas na div .table-wrapper para manter a rolagem responsiva no celular
+      article.querySelectorAll('table').forEach(table => {
+        const wrapper = document.createElement('div');
+        wrapper.className = 'table-wrapper';
+        table.parentNode.insertBefore(wrapper, table);
+        wrapper.appendChild(table);
+      });
+
+      // 4. Transforma o parágrafo final (após o último <hr>) na caixa de conclusão .conclusion-box
+      const hrs = article.querySelectorAll('hr');
+      if (hrs.length > 0) {
+        const lastHr = hrs[hrs.length - 1];
+        const lastElement = article.lastElementChild;
+        if (lastElement && lastElement.tagName === 'P' && (lastHr.compareDocumentPosition(lastElement) & Node.DOCUMENT_POSITION_FOLLOWING)) {
+          const footerBox = document.createElement('footer');
+          footerBox.className = 'conclusion-box';
+          lastElement.parentNode.insertBefore(footerBox, lastElement);
+          footerBox.appendChild(lastElement);
+        }
+      }
+
+      return article;
+    }
+
+    async function carregarTodosMarkdowns() {
       const container = document.getElementById('content');
-      const arquivoMd = "https://raw.githubusercontent.com/marcosmelogithub/avidaboa/refs/heads/main/ARQSMD/AVidaBoa_SegundoPlatao.md";
+      const timestamp = new Date().getTime();
 
       try {
-        // O parâmetro ?t=Date.now() evita que o navegador use uma versão antiga em cache
-        const response = await fetch(`${arquivoMd}?t=${new Date().getTime()}`);
-        
-        if (!response.ok) {
-          throw new Error(`Não foi possível carregar o arquivo (${response.status})`);
-        }
+        // Busca todos os arquivos em paralelo preservando a ordem exata da lista
+        const resultados = await Promise.all(
+          artigos.map(async (artigo) => {
+            const response = await fetch(`${artigo.url}?t=${timestamp}`);
+            if (!response.ok) {
+              throw new Error(`Não foi possível carregar o arquivo ${artigo.url} (${response.status})`);
+            }
+            const texto = await response.text();
+            return renderizarArtigo(texto, artigo.tituloFallback);
+          })
+        );
 
-        const markdownText = await response.text();
-        
-        // Converte o texto Markdown para HTML
-        container.innerHTML = marked.parse(markdownText);
+        // Limpa a mensagem "Carregando conteúdo..."
+        container.innerHTML = '';
 
-        // --- PÓS-PROCESSAMENTO PARA MANTER O VISUAL EXATO DO LAYOUT ORIGINAL ---
-
-        // 1. Garante que exista um título H1 no topo caso o arquivo .md comece direto no texto
-        if (!container.querySelector('h1')) {
-          const h1 = document.createElement('h1');
-          h1.textContent = 'O Pensamento de Platão sobre a Vida Boa';
-          container.prepend(h1);
-        }
-
-        // 2. Estiliza os parágrafos introdutórios (antes da primeira linha divisória <hr>)
-        const children = Array.from(container.children);
-        for (const el of children) {
-          if (el.tagName === 'HR' || el.tagName === 'H2' || el.tagName === 'H3') break;
-          if (el.tagName === 'P') {
-            el.classList.add('intro-p');
+        // Insere cada artigo na sequência, adicionando o divisor entre eles
+        resultados.forEach((elementoArtigo, index) => {
+          if (index > 0) {
+            const divisor = document.createElement('div');
+            divisor.className = 'article-divider';
+            divisor.setAttribute('aria-hidden', 'true');
+            divisor.innerHTML = '<span>&#9670; &#9670; &#9670;</span>';
+            container.appendChild(divisor);
           }
-        }
-
-        // 3. Envolve todas as tabelas na div .table-wrapper para manter a rolagem responsiva no celular
-        container.querySelectorAll('table').forEach(table => {
-          const wrapper = document.createElement('div');
-          wrapper.className = 'table-wrapper';
-          table.parentNode.insertBefore(wrapper, table);
-          wrapper.appendChild(table);
+          container.appendChild(elementoArtigo);
         });
-
-        // 4. Transforma o parágrafo final (após o último <hr>) na caixa de conclusão .conclusion-box
-        const hrs = container.querySelectorAll('hr');
-        if (hrs.length > 0) {
-          const lastHr = hrs[hrs.length - 1];
-          const lastElement = container.lastElementChild;
-          if (lastElement && lastElement.tagName === 'P' && lastHr.compareDocumentPosition(lastElement) & Node.DOCUMENT_POSITION_FOLLOWING) {
-            const footerBox = document.createElement('footer');
-            footerBox.className = 'conclusion-box';
-            lastElement.parentNode.insertBefore(footerBox, lastElement);
-            footerBox.appendChild(lastElement);
-          }
-        }
 
       } catch (erro) {
         console.error(erro);
         container.innerHTML = `
           <div class="conclusion-box">
-            <p><strong>Aviso:</strong> Não foi possível carregar o arquivo <code>${arquivoMd}</code>.</p>
-            <p>Certifique-se de que o arquivo <strong>${arquivoMd}</strong> está na mesma pasta deste HTML e que a página está sendo aberta através de um servidor local (como o <em>Live Server</em> do VS Code) ou hospedada na web, pois navegadores bloqueiam a leitura direta de arquivos locais por segurança (política CORS).</p>
+            <p><strong>Aviso:</strong> ${erro.message}.</p>
+            <p>Verifique sua conexão com a internet ou se os links dos arquivos no GitHub estão acessíveis.</p>
           </div>
         `;
       }
     }
 
-    // Executa assim que a página carrega
-    document.addEventListener('DOMContentLoaded', carregarMarkdown);
+    document.addEventListener('DOMContentLoaded', carregarTodosMarkdowns);
   </script>
 
 </body>
