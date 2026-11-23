@@ -1,3 +1,6 @@
+<!--
+Uma visão resumida sobre o pensamento de Platão sobre a vida boa! 
+-->
 # O Pensamento de Platão sobre a Vida Boa
 
 Para Platão, a **vida boa** (*eudaimonia*, que significa florescimento humano ou felicidade plena) não está ligada ao acúmulo de riquezas, fama ou prazeres imediatos, mas à **harmonia interior da alma** e à **busca pela verdade e pelo Bem**.
